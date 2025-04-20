@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import HostEvent from './pages/HostEvent';
 import EventList from './pages/EventList';
+import MyEvents from './pages/myEvents';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/host" element={<HostEvent/>} />
         <Route path="/events" element={<EventList />} />
+        <Route path="/my-events" element={<MyEvents />} />
       </Routes>
     </BrowserRouter>
   );
