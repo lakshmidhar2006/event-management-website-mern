@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Logo from '../assets/logo.png'; // Adjust the path if needed
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -11,26 +12,64 @@ const Navbar = () => {
   };
 
   return (
-    <nav style={{ padding: '10px', borderBottom: '1px solid gray' }}>
-      <Link to="/home" style={{ marginRight: '15px' }}>Home</Link>
+    <nav style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '10px 30px',
+      background: 'linear-gradient(62deg, #8EC5FC 0%, #e0c3fc 100%)',
+      fontFamily: 'Poppins',
+      position: 'sticky',
+      top: 0,
+      zIndex: 1000,
+      borderBottom: '1px solid gray'
+    }}>
+      {/* Logo */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <img src={Logo} alt="Eventhon" style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
+        <h2 style={{ margin: 0 }}>Eventhon</h2>
+      </div>
 
-      {!token && (
-        <>
-          <Link to="/signup" style={{ marginRight: '15px' }}>Register</Link>
-          <Link to="/login" style={{ marginRight: '15px' }}>Login</Link>
-        </>
-      )}
+      {/* Links */}
+      <div style={{ display: 'flex', gap: '25px', alignItems: 'center' }}>
+        <Link to="/events" style={linkStyle}>Home</Link>
 
-      {token && (
-        <>
-          <Link to="/host-event" style={{ marginRight: '15px' }}>Host Event</Link>
-          <Link to="/events" style={{ marginRight: '15px' }}>View Events</Link>
-          <Link to="/my-events" style={{ marginRight: '15px' }}>My Events</Link>
-          <button onClick={handleLogout} style={{ marginLeft: '15px' }}>Logout</button>
-        </>
-      )}
+        {!token && (
+          <>
+            <Link to="/signup" style={linkStyle}>Register</Link>
+            <Link to="/login" style={linkStyle}>Login</Link>
+          </>
+        )}
+
+        {token && (
+          <>
+            <Link to="/host-event" style={linkStyle}>Host Event</Link>
+            <Link to="/events" style={linkStyle}>View Events</Link>
+            <Link to="/my-events" style={linkStyle}>My Events</Link>
+            <button onClick={handleLogout} style={buttonStyle}>Logout</button>
+          </>
+        )}
+      </div>
     </nav>
   );
+};
+
+// 🔹 Reusable styles
+const linkStyle = {
+  textDecoration: 'none',
+  color: 'black',
+  fontWeight: '500',
+  fontSize: '16px'
+};
+
+const buttonStyle = {
+  backgroundColor: '#000',
+  color: '#fff',
+  padding: '6px 14px',
+  borderRadius: '5px',
+  border: 'none',
+  cursor: 'pointer',
+  fontSize: '15px'
 };
 
 export default Navbar;
