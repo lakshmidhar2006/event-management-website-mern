@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './HostEvent.css'; // ⬅️ Link to CSS
 
 const HostEvent = () => {
   const [title, setTitle] = useState('');
@@ -11,7 +12,7 @@ const HostEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    const organizerId = JSON.parse(atob(token.split('.')[1])).id; // decode user ID from JWT
+    const organizerId = JSON.parse(atob(token.split('.')[1])).id;
 
     try {
       await axios.post('http://localhost:5000/api/events/create', {
@@ -29,8 +30,9 @@ const HostEvent = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Host an Event</h2>
+    <form onSubmit={handleSubmit} className="host-event-form">
+      <h2 className="host-event-title">Host an Event</h2>
+      
       <input
         type="text"
         placeholder="Title"

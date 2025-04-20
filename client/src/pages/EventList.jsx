@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './EventList.css'; // ⬅️ Importing the CSS
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
@@ -18,7 +19,7 @@ const EventList = () => {
     const userId = JSON.parse(atob(token.split('.')[1])).id;
 
     try {
-      await axios.post(`http://localhost:5000/api/events//register/${eventId}`, { userId });
+      await axios.post(`http://localhost:5000/api/events/register/${eventId}`, { userId });
       alert('Registered successfully!');
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to register');
@@ -30,19 +31,19 @@ const EventList = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Available Events</h2>
+    <div className="event-list-container">
+      <h2 className="event-list-title">Available Events</h2>
       {events.length === 0 ? (
-        <p>No events found.</p>
+        <p className="event-list-empty">No events found.</p>
       ) : (
         events.map((event) => (
-          <div key={event._id} style={{ border: '1px solid gray', padding: '10px', margin: '10px 0' }}>
-            <h3>{event.title}</h3>
-            <p>{event.description}</p>
-            <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-            <p>Location: {event.location}</p>
-            <p>Max Participants: {event.maxParticipants}</p>
-            <button onClick={() => handleRegister(event._id)}>Register</button>
+          <div key={event._id} className="event-list-card">
+            <h3 className="event-card-title">{event.title}</h3>
+            <p className="event-card-description">{event.description}</p>
+            <p className="event-card-detail">📅 Date: {new Date(event.date).toLocaleDateString()}</p>
+            <p className="event-card-detail">📍 Location: {event.location}</p>
+            <p className="event-card-detail">👥 Max Participants: {event.maxParticipants}</p>
+            <button className="event-card-button" onClick={() => handleRegister(event._id)}>Register</button>
           </div>
         ))
       )}
