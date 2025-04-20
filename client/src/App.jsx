@@ -4,10 +4,12 @@ import Signup from './pages/Signup';
 import HostEvent from './pages/HostEvent';
 import EventList from './pages/EventList';
 import MyEvents from './pages/myEvents';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <BrowserRouter>
+     <Navbar/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
