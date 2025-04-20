@@ -18,7 +18,7 @@ const EventList = () => {
     const userId = JSON.parse(atob(token.split('.')[1])).id;
 
     try {
-      await axios.post(`http://localhost:5000/api/events/${eventId}/register`, { userId });
+      await axios.post(`http://localhost:5000/api/events//register/${eventId}`, { userId });
       alert('Registered successfully!');
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to register');

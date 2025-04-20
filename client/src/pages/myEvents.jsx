@@ -30,15 +30,15 @@ const MyEvents = () => {
           <div key={event._id} style={{ border: '1px solid gray', margin: '15px 0', padding: '10px' }}>
             <h3>{event.title}</h3>
             <p>{event.description}</p>
-            <p>Participants Registered: {event.registeredUsers.length}</p>
+            <p>Participants Registered: {event.participants.length}</p>
 
             <details>
-              <p>See Registered Users</p>
-              {event.registeredUsers.length === 0 ? (
+              <summary>See Registered Users</summary>
+              {event.participants.length === 0 ? (
                 <p>No one registered yet.</p>
               ) : (
                 <ul>
-                  {event.registeredUsers.map((user) => (
+                  {event.participants.map((user) => (
                     <li key={user._id}>{user.name} – {user.email}</li>
                   ))}
                 </ul>
