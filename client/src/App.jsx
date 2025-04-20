@@ -9,11 +9,11 @@ import Navbar from './components/Navbar';
 function App() {
   return (
     <BrowserRouter>
-     <Navbar/>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/host" element={<HostEvent/>} />
+        <Route path="/host-event" element={<HostEvent />} />
         <Route path="/events" element={<EventList />} />
         <Route path="/my-events" element={<MyEvents />} />
       </Routes>
