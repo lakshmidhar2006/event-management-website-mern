@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css'; // ⬅️ Import the CSS file
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,6 +17,7 @@ const Login = () => {
       const res = await axios.post('http://localhost:5000/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       alert('Login successful!');
+      navigate('/home')
     } catch (err) {
       alert(err.response?.data?.message || 'Login failed');
     }
