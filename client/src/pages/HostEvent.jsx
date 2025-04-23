@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './HostEvent.css';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const HostEvent = () => {
   const [title, setTitle] = useState('');
@@ -11,31 +12,74 @@ const HostEvent = () => {
   const [category, setCategory] = useState('Technical');
   const [paymentType, setPaymentType] = useState('Free');
 
+  const { eventId } = useParams();
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem('token');
+  const organizerId = JSON.parse(atob(token.split('.')[1])).id;
+
+  // Fetch existing event for edit
+  useEffect(() => {
+    if (eventId) {
+      axios.get(`http://localhost:5000/api/events/${eventId}`)
+        .then((res) => {
+          const event = res.data;
+          setTitle(event.title);
+          setDescription(event.description);
+          setDate(event.date.slice(0, 10)); // format date for input
+          setLocation(event.location);
+          setMaxParticipants(event.maxParticipants);
+          setCategory(event.category);
+          setPaymentType(event.paymentType);
+        })
+        .catch(err => {
+          alert('Failed to load event details');
+          console.error(err);
+        });
+    }
+  }, [eventId]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-    const organizerId = JSON.parse(atob(token.split('.')[1])).id;
+
+    const selectedDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+      alert('Please select a future date for the event.');
+      return;
+    }
+
+    const eventData = {
+      title,
+      description,
+      date,
+      location,
+      maxParticipants,
+      organizerId,
+      category,
+      paymentType
+    };
 
     try {
-      await axios.post('http://localhost:5000/api/events/create', {
-        title,
-        description,
-        date,
-        location,
-        maxParticipants,
-        organizerId,
-        category,
-        paymentType,
-      });
-      alert('Event created successfully!');
+      if (eventId) {
+        await axios.put(`http://localhost:5000/api/events/update/${eventId}`, eventData);
+        alert('Event updated successfully!');
+      } else {
+        await axios.post('http://localhost:5000/api/events/create', eventData);
+        alert('Event created successfully!');
+      }
+
+      navigate('/my-events');
     } catch (err) {
-      alert(err.response?.data?.message || 'Failed to create event');
+      alert(err.response?.data?.message || 'Failed to save event');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="host-event-form">
-      <h2 className="host-event-title">Host an Event</h2>
+      <h2 className="host-event-title">{eventId ? 'Update Event' : 'Host an Event'}</h2>
 
       <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
       <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
@@ -53,7 +97,7 @@ const HostEvent = () => {
         <option value="Paid">Paid</option>
       </select>
 
-      <button type="submit">Create Event</button>
+      <button type="submit">{eventId ? 'Update Event' : 'Create Event'}</button>
     </form>
   );
 };

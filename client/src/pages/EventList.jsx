@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import axios from 'axios';
 import './EventList.css';
+import { useNavigate } from 'react-router-dom';
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
@@ -8,6 +9,9 @@ const EventList = () => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [paymentType, setPaymentType] = useState('All');
+  const navigate = useNavigate();
+
+  const today = new Date();
 
   const fetchEvents = async () => {
     try {
@@ -26,6 +30,7 @@ const EventList = () => {
     try {
       await axios.post(`http://localhost:5000/api/events/register/${eventId}`, { userId });
       alert('Registered successfully!');
+      navigate('/registered-events');
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to register');
     }
@@ -55,6 +60,9 @@ const EventList = () => {
     setFilteredEvents(filtered);
   }, [search, category, paymentType, events]);
 
+  const upcomingEvents = filteredEvents.filter(event => new Date(event.date) >= today);
+  const completedEvents = filteredEvents.filter(event => new Date(event.date) < today);
+
   return (
     <div className="event-list-container">
       <h2 className="event-list-title">Available Events</h2>
@@ -67,7 +75,6 @@ const EventList = () => {
           onChange={(e) => setSearch(e.target.value)}
           className="search-bar"
         />
-
         <div className="category-buttons">
           <button onClick={() => setCategory('All')}>All</button>
           <button onClick={() => setCategory('Technical')}>Technical</button>
@@ -81,10 +88,11 @@ const EventList = () => {
         </div>
       </div>
 
-      {filteredEvents.length === 0 ? (
-        <p className="event-list-empty">No events found.</p>
+      <h3>Upcoming Events</h3>
+      {upcomingEvents.length === 0 ? (
+        <p className="event-list-empty">No upcoming events found.</p>
       ) : (
-        filteredEvents.map((event) => (
+        upcomingEvents.map((event) => (
           <div key={event._id} className="event-list-card">
             <h3 className="event-card-title">{event.title}</h3>
             <p className="event-card-description">{event.description}</p>
@@ -97,8 +105,27 @@ const EventList = () => {
           </div>
         ))
       )}
+
+      <h3>Completed Events</h3>
+      {completedEvents.length === 0 ? (
+        <p className="event-list-empty">No completed events.</p>
+      ) : (
+        completedEvents.map((event) => (
+          <div key={event._id} className="event-list-card completed-event">
+            <h3 className="event-card-title">{event.title}</h3>
+            <p className="event-card-description">{event.description}</p>
+            <p className="event-card-detail">📅 Date: {new Date(event.date).toLocaleDateString()}</p>
+            <p className="event-card-detail">📍 Location: {event.location}</p>
+            <p className="event-card-detail">👥 Max Participants: {event.maxParticipants}</p>
+            <p className="event-card-detail">🧩 Category: {event.category}</p>
+            <p className="event-card-detail">💰 Payment: {event.paymentType}</p>
+            <p className="completed-label">✔ Completed</p>
+          </div>
+        ))
+      )}
     </div>
   );
 };
+
 
 export default EventList;

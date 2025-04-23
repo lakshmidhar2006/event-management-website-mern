@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './MyEvents.css';
+import { useNavigate } from 'react-router-dom';
 
 const MyEvents = () => {
   const [myEvents, setMyEvents] = useState([]);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [paymentType, setPaymentType] = useState('All');
+  const [participantSearch, setParticipantSearch] = useState({});
+
+  const navigate = useNavigate();
 
   const fetchMyEvents = async () => {
     const token = localStorage.getItem('token');
@@ -17,6 +21,46 @@ const MyEvents = () => {
       setMyEvents(res.data);
     } catch (err) {
       console.error('Error fetching events:', err);
+    }
+  };
+
+  const handleDeleteEvent = async (eventId) => {
+    const token = localStorage.getItem('token');
+    const organizerId = JSON.parse(atob(token.split('.')[1])).id;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/events/delete/${eventId}`, {
+        data: { organizerId }
+      });
+      setMyEvents(prev => prev.filter(event => event._id !== eventId));
+    } catch (err) {
+      console.error('Error deleting event:', err);
+    }
+  };
+
+  const handleUpdateEvent = (eventId) => {
+    navigate(`/update-event/${eventId}`);
+  };
+
+  const handleRemoveParticipant = async (eventId, userId) => {
+    const token = localStorage.getItem('token');
+    const organizerId = JSON.parse(atob(token.split('.')[1])).id;
+
+    try {
+      await axios.put(`http://localhost:5000/api/events/remove-participant/${eventId}`, {
+        userId,
+        organizerId
+      });
+
+      setMyEvents(prevEvents =>
+        prevEvents.map(event =>
+          event._id === eventId
+            ? { ...event, participants: event.participants.filter(p => p._id !== userId) }
+            : event
+        )
+      );
+    } catch (err) {
+      console.error('Error removing participant:', err);
     }
   };
 
@@ -71,16 +115,47 @@ const MyEvents = () => {
 
             <details className="participants-details">
               <summary>See Registered Users</summary>
+
+              <input
+                type="text"
+                placeholder="Search participant..."
+                className="search-bar"
+                value={participantSearch[event._id] || ''}
+                onChange={(e) =>
+                  setParticipantSearch(prev => ({
+                    ...prev,
+                    [event._id]: e.target.value
+                  }))
+                }
+              />
+
               {event.participants.length === 0 ? (
                 <p className="no-participants-text">No one registered yet.</p>
               ) : (
                 <ul className="participants-list">
-                  {event.participants.map((user) => (
-                    <li key={user._id}>{user.name} – {user.email}</li>
-                  ))}
+                  {event.participants
+                    .filter(user =>
+                      user.name.toLowerCase().includes((participantSearch[event._id] || '').toLowerCase())
+                    )
+                    .map((user) => (
+                      <li key={user._id}>
+                        {user.name} – {user.email}
+                        <button
+                          className="remove-user-button"
+                          onClick={() => handleRemoveParticipant(event._id, user._id)}
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    ))}
                 </ul>
               )}
             </details>
+
+            <div className="event-actions">
+              <button onClick={() => handleUpdateEvent(event._id)} className="update-button">Update</button>
+              <button onClick={() => handleDeleteEvent(event._id)} className="delete-button">Delete</button>
+            </div>
           </div>
         ))
       )}

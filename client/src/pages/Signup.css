@@ -55,4 +55,13 @@
     font-size: 14px;
     color: #444;
   }
+  .invalid-input {
+    border: 2px solid red;
+  }
+  
+  .login-message, .signup-message {
+    color: red;
+    margin-top: 10px;
+    font-weight: 500;
+  }
   

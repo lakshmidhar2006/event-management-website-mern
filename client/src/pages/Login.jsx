@@ -1,23 +1,40 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Login.css'; // ⬅️ Import the CSS file
+import './Login.css';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
-  const navigate = useNavigate()
+  const [emailValid, setEmailValid] = useState(true);
+  const navigate = useNavigate();
+
+  const isValidEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    if (name === 'email') {
+      setEmailValid(true);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isValidEmail(form.email)) {
+      setEmailValid(false);
+      return;
+    }
+
     try {
       const res = await axios.post('http://localhost:5000/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       alert('Login successful!');
-      navigate('/home')
+      navigate('/home');
     } catch (err) {
       alert(err.response?.data?.message || 'Login failed');
     }
@@ -34,7 +51,7 @@ const Login = () => {
           value={form.email}
           onChange={handleChange}
           required
-          className="login-input"
+          className={`login-input ${emailValid ? '' : 'invalid-input'}`}
         />
         <input
           name="password"
@@ -46,6 +63,7 @@ const Login = () => {
           className="login-input"
         />
         <button type="submit" className="login-button">Login</button>
+        {!emailValid && <p className="login-message">Please enter a valid email address.</p>}
       </form>
     </div>
   );

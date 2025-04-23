@@ -24,6 +24,8 @@ function App() {
         <Route path="/my-events" element={<MyEvents />} />
         <Route path="/registered-events" element={<RegisteredEvents />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/update-event/:eventId" element={<HostEvent />} />
+
       </Routes>
     </BrowserRouter>
   );

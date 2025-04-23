@@ -32,6 +32,21 @@ const RegisteredEvents = () => {
     }
   };
 
+  const handleCancelRegistration = async (eventId) => {
+    const token = localStorage.getItem('token');
+    const userId = JSON.parse(atob(token.split('.')[1])).id;
+
+    try {
+      await axios.put(`http://localhost:5000/api/events/cancel-registration/${eventId}`, {
+        userId,
+      });
+
+      setRegisteredEvents(prev => prev.filter(event => event._id !== eventId));
+    } catch (err) {
+      console.error('Error cancelling registration:', err);
+    }
+  };
+
   const filtered = registeredEvents.filter(event => {
     return (
       (category === 'All' || event.category.toLowerCase() === category.toLowerCase()) &&
@@ -101,6 +116,13 @@ const RegisteredEvents = () => {
             <p className="event-location">Location: {event.location}</p>
             <p className="event-category">Category: {event.category}</p>
             <p className="event-payment">Payment Type: {event.paymentType}</p>
+
+            <button
+              onClick={() => handleCancelRegistration(event._id)}
+              className="cancel-registration-button"
+            >
+              Cancel Registration
+            </button>
           </div>
         ))
       )}

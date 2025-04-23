@@ -99,6 +99,43 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+.event-actions {
+  margin-top: 10px;
+}
+
+.update-button,
+.delete-button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.update-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+}
+.remove-user-button {
+  margin-left: 10px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-user-button:hover {
+  background-color: #c0392b;
+}
+
 
 .category-buttons button:hover,
 .payment-buttons button:hover {
