@@ -1,74 +1,144 @@
-/* MyEvents.css */
-
 .my-events-container {
-    padding: 40px 20px;
-    min-height: 100vh;
-    background: linear-gradient(to bottom right, #004aad, #cb6ce6);
-    color: #fff;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .my-events-title {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 30px;
-  }
-  
-  .no-events-text {
-    text-align: center;
-    font-size: 18px;
-    color: #f0f0f0;
-  }
-  
-  .event-card {
-    background-color: white;
-    color: #333;
-    border-radius: 12px;
-    padding: 20px 25px;
-    margin: 20px auto;
-    max-width: 600px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .event-card:hover {
-    transform: scale(1.02);
-  }
-  
-  .event-title {
-    margin-bottom: 10px;
-    font-size: 24px;
-    color: #004aad;
-  }
-  
-  .event-description {
-    margin-bottom: 10px;
-    font-size: 16px;
-  }
-  
-  .event-participants {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .participants-details summary {
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
-    color: #004aad;
-  }
-  
-  .no-participants-text {
-    font-style: italic;
-    margin-top: 10px;
-  }
-  
-  .participants-list {
-    margin-top: 10px;
-    padding-left: 20px;
-  }
-  
-  .participants-list li {
-    margin-bottom: 5px;
-  }
-  
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.my-events-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.no-events-text {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+}
+
+.event-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: #fdfdfd;
+}
+
+.event-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.event-description {
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.event-participants,
+.event-category,
+.event-payment {
+  color: #444;
+  margin: 0.3rem 0;
+}
+
+.participants-details summary {
+  cursor: pointer;
+  margin-top: 1rem;
+  color: #0077cc;
+  font-weight: 500;
+}
+
+.participants-list {
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+}
+
+.no-participants-text {
+  margin-top: 0.5rem;
+  color: #888;
+}
+/* Filters Section */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Search Bar */
+.search-bar {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 300px;
+  color: #333;
+}
+
+/* Buttons Group */
+.category-buttons,
+.payment-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.category-buttons button,
+.payment-buttons button {
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.event-actions {
+  margin-top: 10px;
+}
+
+.update-button,
+.delete-button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.update-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+}
+.remove-user-button {
+  margin-left: 10px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-user-button:hover {
+  background-color: #c0392b;
+}
+
+
+.category-buttons button:hover,
+.payment-buttons button:hover {
+  background-color: #e6f2ff;
+}
+

@@ -1,52 +1,64 @@
-/* HostEvent.css */
-
 .host-event-form {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .host-event-title {
-    text-align: center;
-    color: #2575fc;
-    margin-bottom: 25px;
-    font-size: 28px;
-  }
-  
-  .host-event-form input,
-  .host-event-form textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 18px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
-    font-family: inherit;
-  }
-  
-  .host-event-form textarea {
-    resize: vertical;
-    height: 100px;
-  }
-  
-  .host-event-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #2575fc;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .host-event-form button:hover {
-    background-color: #0053d9;
-  }
-  
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.host-event-title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.host-event-form input,
+.host-event-form textarea,
+.host-event-form select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.host-event-form input:focus,
+.host-event-form textarea:focus,
+.host-event-form select:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.host-event-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.host-event-form select {
+  background-color: #fff;
+}
+
+.host-event-form button {
+  background-color: #4a90e2;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.host-event-form button:hover {
+  background-color: #3a7bd5;
+}

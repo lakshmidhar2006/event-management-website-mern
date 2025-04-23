@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Signup.css'; // ⬅️ Add this line to include your styles
+import './Signup.css';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [emailValid, setEmailValid] = useState(true);
+  const navigate = useNavigate()
+
+  const isValidEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isValidEmail(email)) {
+      setEmailValid(false);
+      setMessage('Please enter a valid email address.');
+      return;
+    }
 
     const formData = { name, email, password };
 
@@ -20,6 +34,8 @@ const Signup = () => {
       setName('');
       setEmail('');
       setPassword('');
+      setEmailValid(true);
+      navigate('/')
     } catch (error) {
       console.error(error);
       setMessage(error.response?.data?.message || 'Registration failed');
@@ -42,10 +58,13 @@ const Signup = () => {
         <input
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setEmailValid(true);
+          }}
           placeholder="Email"
           required
-          className="signup-input"
+          className={`signup-input ${emailValid ? '' : 'invalid-input'}`}
         />
         <input
           type="password"

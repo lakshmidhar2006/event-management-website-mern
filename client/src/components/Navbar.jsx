@@ -32,23 +32,24 @@ const Navbar = () => {
 
       {/* Links */}
       <div style={{ display: 'flex', gap: '25px', alignItems: 'center' }}>
-        <Link to="/events" style={linkStyle}>Home</Link>
+        
 
         {!token && (
           <>
             <Link to="/signup" style={linkStyle}>Register</Link>
-            <Link to="/login" style={linkStyle}>Login</Link>
+            <Link to="/" style={linkStyle}>Login</Link>
           </>
         )}
+{token && (
+  <><Link to="/home" style={linkStyle}>Home</Link>
+    <Link to="/host-event" style={{ marginRight: '15px' }}>Host Event</Link>
+    <Link to="/events" style={{ marginRight: '15px' }}>View Events</Link>
+    <Link to="/my-events" style={{ marginRight: '15px' }}>My Events</Link>
+    <Link to="/registered-events" style={{ marginRight: '15px' }}>Registered Events</Link>
+    <button onClick={handleLogout} style={{ marginLeft: '15px' }}>Logout</button>
+  </>
+)}
 
-        {token && (
-          <>
-            <Link to="/host-event" style={linkStyle}>Host Event</Link>
-            <Link to="/events" style={linkStyle}>View Events</Link>
-            <Link to="/my-events" style={linkStyle}>My Events</Link>
-            <button onClick={handleLogout} style={buttonStyle}>Logout</button>
-          </>
-        )}
       </div>
     </nav>
   );
