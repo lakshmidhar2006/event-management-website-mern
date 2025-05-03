@@ -13,13 +13,21 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        required: false,
     },
-    isOrganizer:{
+    role:{
+        type: [String],
+        required:true,
+        enum: ["user" , "admin","Organizer"],
+        default:["user"]
+      },
+      isActivated:{
         type:Boolean,
         default:false
-    }
+    },
 },{
     timestamps:true
 })
-export default mongoose.model('User',userSchema)
+const User= mongoose.model('User',userSchema)
+
+export default User
