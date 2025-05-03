@@ -1,98 +1,180 @@
-.event-list-container {
-  padding: 2rem;
-  max-width: 1000px;
-  margin: auto;
+/* Container for the entire page */
+.my-events-container {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
 }
+
+/* Title for the page */
+.my-events-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Filter section */
 .filters {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
 .search-bar {
-  padding: 8px;
-  font-size: 16px;
-  width: 100%;
-  max-width: 400px;
+  padding: 10px;
+  min-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
-.category-buttons button,
-.payment-buttons button {
-  margin-right: 10px;
-  padding: 6px 12px;
+.category-buttons,
+.payment-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 10px;
+  border-radius: 6px;
   border: none;
-  background-color: #eee;
   cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.category-buttons button:hover,
-.payment-buttons button:hover {
-  background-color: #ddd;
-}
-
-.event-list-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+  background-color: #e1e8f0;
   color: #333;
 }
 
-.event-list-empty {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #777;
+button.active {
+  background-color: #4c8ef7;
+  color: white;
 }
 
-.event-list-card {
-  border: 1px solid #ccc;
+button:hover {
+  background-color: #d3d8e3;
+}
+
+/* Event card styling */
+.event-card {
+  background-color: #fff;
   border-radius: 10px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  background-color: #f9f9f9;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
 }
 
-.event-card-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.event-title {
+  color: #222;
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 
-.event-card-description {
-  margin: 0.5rem 0;
+.event-description {
+  margin-bottom: 10px;
   color: #555;
 }
 
-.event-card-detail {
-  margin: 0.3rem 0;
-  color: #444;
-}
-.completed-event {
-  background-color: #f0f0f0;
-  border-left: 5px solid #888;
-  opacity: 0.7;
-  pointer-events: none;
+.event-category,
+.event-payment,
+.event-participants {
+  margin-bottom: 5px;
+  font-size: 14px;
 }
 
-.completed-event .completed-label {
+.event-category {
+  color: #2c6ed5;
+}
+
+.event-payment {
+  color: #28a745;
+}
+
+.event-participants {
   font-weight: bold;
-  color: #888;
+}
+
+/* Participants details */
+.participants-details {
   margin-top: 10px;
 }
 
-
-.event-card-button {
-  margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
-  background-color: #0077cc;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
+.participants-details summary {
+  color: #007bff;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
-.event-card-button:hover {
-  background-color: #005fa3;
+.no-participants-text {
+  color: #888;
+  text-align: center;
+}
+
+.participants-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.participants-list li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.participant-name {
+  color: #333;
+}
+
+.remove-user-button {
+  background-color: #dc3545;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-size: 12px;
+}
+
+.remove-user-button:hover {
+  background-color: #c82333;
+}
+
+/* Action buttons for updating and deleting events */
+.event-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.update-button,
+.delete-button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  width: 48%;
+}
+
+.update-button {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.update-button:hover {
+  background-color: #e0a800;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* No events message */
+.no-events-text {
+  text-align: center;
+  color: #888;
+  font-size: 16px;
 }
